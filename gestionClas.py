@@ -22,21 +22,32 @@ class eleveRech(QMainWindow):
 
     def updateAcademies(self):
         self.ui.cbAcad.clear()
-        maliste = []
+        malisteAcad = []
         for a in self.mesdata["academies"]:
-            maliste.append(a["nom"])
-        # maliste.append("Paris")
-        self.ui.cbAcad.addItems(maliste)
+            malisteAcad.append(a["nom"])
+        self.ui.cbAcad.addItems(malisteAcad)
 
     def updateEtablissements(self):
         self.ui.cbEtab.clear()
+        malisteEtab = []
         for e in self.mesdata["academies"][self.ui.cbAcad.currentIndex()]["etablissements"]:
-            self.ui.cbEtab.addItem(e["nom"])
+            malisteEtab.append(e["nom"])
+        self.ui.cbEtab.addItem(malisteEtab)
+
+    def updateClasse(self):
+        self.ui.cbClass.clear()
+        for a in self.dico["academies"][self.ui.cbAcademie.currentIndex()]["etablissements"]:
+            self.ui.cbClass.addItem(a["nom"])
+
+    # self.ui.lecture.clicked.connect(self.lectureClicked)
+    # self.mediaPlayer = QMediaPlayer()
+    # self.mediaPlayer.setVideoOutput(self.ui.ecran)
     #
-    # def updateClasse(self):
-    #     self.ui.cbClass.clear()
-    #     for a in self.dico["academies"][self.ui.cbAcademie.currentIndex()]["etablissements"]:
-    #         self.ui.cbClass.addItem(a["nom"])
+    # self.ui.pause.clicked.connect(self.pauseClicked)
+    # self.ui.suivant.clicked.connect(self.suivantClicked)
+    # self.ui.stop.clicked.connect(self.stopClicked)
+    # self.ui.precedent.clicked.connect(self.precedentClicked)
+
     #
     # def updateMatiere(self):
     #     self.ui.cbMatier.clear()

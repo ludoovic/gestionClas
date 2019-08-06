@@ -1,299 +1,273 @@
 {
-  "academies":
-  [
+  "academies": [
     {
-      "nom":"Toulouse",
-      "etablissements":
-      [
+      "etablissements": [
         {
-          "nom":"Adonis",
-          "adresse":"179 Avenue de Muret",
-          "classes":
-          [
+          "adresse": "179 Avenue de Muret",
+          "classes": [
             {
-              "nom":"Diet2",
-              "anneeSco":"2018",
-              "PP":"Carron",
-              "eleves":
-              [
+              "PP": "Carron",
+              "anneeSco": "2018",
+              "eleves": [
                 {
-                  "nom":"Alcher",
-                  "prenom":"Estelle",
-                  "adresse":"32 rue Patate, 31500 Muret",
-                  "appreciationPP":"Elève parfaite",
-                  "matieres":
-                  [
+                  "adresse": "32 rue Patate, 31500 Muret",
+                  "appreciationPP": "Eleve parfaite",
+                  "matieres": [
                     {
-                      "nom":"Physiologie",
-                      "coef":4.0,
-                      "appreciation":"Dynamique et investie",
-                      "notes":
-                      [
+                      "appreciation": "Dynamique et investie",
+                      "coef": 4.0,
+                      "nom": "Physiologie",
+                      "notes": [
                         {
-                          "nom":"DST Physio n°1",
                           "coef": 2.0,
-                          "valeur":15.0
+                          "nom": "DST Physio n1",
+                          "valeur": 15.0
                         },
                         {
-                          "nom":"DST Physio n°2",
                           "coef": 2.0,
-                          "valeur":12.0
+                          "nom": "DST Physio n2",
+                          "valeur": 12.0
+                        },
+                        {
+                          "coefficient": 2.0,
+                          "nom": "DST n3",
+                          "valeur": 10.0
                         }
                       ]
                     },
                     {
-                      "nom":"Physipathologie",
-                      "coef":4.0,
-                      "appreciation":"Dynamique et investie",
-                      "notes":
-                      [
+                      "appreciation": "Dynamique et investie",
+                      "coef": 4.0,
+                      "nom": "Physipathologie",
+                      "notes": [
                         {
-                          "nom":"DST PhysioPath n°1",
                           "coef": 2.0,
-                          "valeur":13.0
+                          "nom": "DST PhysioPath n1",
+                          "valeur": 13.0
                         },
                         {
-                          "nom":"DST PhsyioPath n°2",
                           "coef": 2.0,
-                          "valeur":11.0
+                          "nom": "DST PhsyioPath n2",
+                          "valeur": 11.0
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "nom": "Alcher",
+                  "prenom": "Estelle"
                 },
                 {
-                  "nom":"Duquenne",
-                  "prenom":"Morganne",
-                  "adresse":"2 rue Bonnefoy, 31300 Toulouse",
-                  "appreciationPP":"Elève sérieuse",
-                  "matieres":
-                  [
+                  "adresse": "32 rue du Paon, 31500 Muret",
+                  "appreciationPP": "Eleve parfait",
+                  "matieres": [
                     {
-                      "nom":"Physiologie",
-                      "coef":4.0,
-                      "appreciation":"Dynamique et investie",
-                      "notes":
-                      [
+                      "appreciation": "Dynamique et investie",
+                      "coef": 4.0,
+                      "nom": "Physiologie",
+                      "notes": [
                         {
-                          "nom":"DST Physio n°1",
                           "coef": 2.0,
-                          "valeur":17.0
+                          "nom": "DST Physio n1",
+                          "valeur": 15.0
                         },
                         {
-                          "nom":"DST Physio n°2",
                           "coef": 2.0,
-                          "valeur":15.0
+                          "nom": "DST Physio n2",
+                          "valeur": 12.0
+                        },
+                        {
+                          "coefficient": 2.0,
+                          "nom": "DST n3",
+                          "valeur": 15.0
                         }
                       ]
                     },
                     {
-                      "nom":"Physipathologie",
-                      "coef":4.0,
-                      "appreciation":"Dynamique et investie",
-                      "notes":
-                      [
+                      "appreciation": "Dynamique et investie",
+                      "coef": 4.0,
+                      "nom": "Physipathologie",
+                      "notes": [
                         {
-                          "nom":"DST PhysioPath n°1",
                           "coef": 2.0,
-                          "valeur":15.0
+                          "nom": "DST PhysioPath n1",
+                          "valeur": 13.0
                         },
                         {
-                          "nom":"DST PhsyioPath n°2",
                           "coef": 2.0,
-                          "valeur":16.0
+                          "nom": "DST PhsyioPath n2",
+                          "valeur": 11.0
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "nom": "Baratoux",
+                  "prenom": "Gerald"
+                },
+                {
+                  "adresse": "2 rue Bonnefoy, 31300 Toulouse",
+                  "appreciationPP": "Eleve serieuse",
+                  "matieres": [
+                    {
+                      "appreciation": "Dynamique et investie",
+                      "coef": 4.0,
+                      "nom": "Physiologie",
+                      "notes": [
+                        {
+                          "coef": 2.0,
+                          "nom": "DST Physio n1",
+                          "valeur": 17.0
+                        },
+                        {
+                          "coef": 2.0,
+                          "nom": "DST Physio n2",
+                          "valeur": 15.0
+                        },
+                        {
+                          "coefficient": 2.0,
+                          "nom": "DST n3",
+                          "valeur": 11.0
+                        }
+                      ]
+                    },
+                    {
+                      "appreciation": "Dynamique et investie",
+                      "coef": 4.0,
+                      "nom": "Physipathologie",
+                      "notes": [
+                        {
+                          "coef": 2.0,
+                          "nom": "DST PhysioPath n1",
+                          "valeur": 15.0
+                        },
+                        {
+                          "coef": 2.0,
+                          "nom": "DST PhsyioPath n2",
+                          "valeur": 16.0
+                        }
+                      ]
+                    }
+                  ],
+                  "nom": "Duquenne",
+                  "prenom": "Morganne"
                 }
-              ]
+              ],
+              "nom": "Diet2"
             },
             {
-              "nom":"Diet1",
-              "anneeSco":"2018",
-              "PP":"Carrouché",
-              "eleves":
-              [
+              "PP": "Carrouche",
+              "anneeSco": "2018",
+              "eleves": [
                 {
-                  "nom":"Jacquet",
-                  "prenom":"Hugo",
-                  "adresse":"3 rue Amitié, 31100 Toulouse",
-                  "appreciationPP":"Elève dissipé",
-                  "matieres":
-                  [
+                  "adresse": "3 rue Amitie, 31100 Toulouse",
+                  "appreciationPP": "Eleve dissipe",
+                  "matieres": [
                     {
-                      "nom":"Physiologie",
-                      "coef":4.0,
-                      "appreciation":"Peut mieux faire",
-                      "notes":
-                      [
+                      "appreciation": "Peut mieux faire",
+                      "coef": 4.0,
+                      "nom": "Physiologie",
+                      "notes": [
                         {
-                          "nom":"DST n°1",
                           "coef": 1.5,
-                          "valeur":12.0
+                          "nom": "DST 1",
+                          "valeur": 12.0
+                        }
+                      ]
+                    },
+                    {
+                      "appreciation": "Manque de travail",
+                      "coef": 2.0,
+                      "nom": "Biochimie",
+                      "notes": [
+                        {
+                          "coef": 1.0,
+                          "nom": "DST 1",
+                          "valeur": 8.0
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "nom": "Jacquet",
+                  "prenom": "Hugo"
                 }
-              ]
+              ],
+              "nom": "Diet1"
             }
-          ]
+          ],
+          "nom": "Adonis"
         },
         {
-          "nom":"Aelion",
-          "adresse":"179 Avenue de Balma",
-          "classes":
-          [
+          "adresse": "283 Avenue de Muret",
+          "classes": [
             {
-              "nom": "Diet2",
+              "PP": "Navaro",
               "anneeSco": "2018",
-              "PP": "Carron",
-              "eleves":
-              [
+              "eleves": [
                 {
-                  "nom": "Alcher",
-                  "prenom": "Estelle",
-                  "adresse": "32 rue Patate, 31500 Muret",
-                  "appreciationPP": "Elève parfaite",
-                  "matieres":
-                  [
+                  "adresse": "55 avenue de la Gloire, 31100 Saint-Simon",
+                  "appreciationPP": "Eleve serieuse",
+                  "matieres": [
                     {
-                      "nom": "Physiologie",
+                      "appreciation": "Motivation",
                       "coef": 4.0,
-                      "appreciation": "Dynamique et investie",
-                      "notes":
-                      [
-                        {
-                          "nom": "DST n°1",
-                          "coef": 2.0,
-                          "valeur": 15.0
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-            {
-              "nom":"Developpeur Python",
-              "anneeSco":"2019",
-              "PP":"Matthias Collin et Gerald Baratoux",
-              "eleves":
-              [
-                {
-                  "nom":"Trigano",
-                  "prenom":"Jeremy",
-                  "adresse":"32 rue Patate, 31500 Muret",
-                  "appreciationPP":"Elève parfait, je dirais même lumineux",
-                  "matieres":
-                  [
-                    {
-                      "nom":"Dev Ops",
-                      "coef":4.0,
-                      "appreciation":"Il a tout pété !",
-                      "notes":
-                      [
-                        {
-                          "nom":"DST n°1",
-                          "coef": 2.0,
-                          "valeur":15.0
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "nom":"Tarbes",
-      "etablissements":
-      [
-        {
-          "nom":"Adonis",
-          "adresse":"179 Avenue de Muret",
-          "classes":
-          [
-            {
-              "nom":"Diet2",
-              "anneeSco":"2018",
-              "PP":"Carron",
-              "eleves":
-              [
-                {
-                  "nom":"Alcher",
-                  "prenom":"Estelle",
-                  "adresse":"32 rue Patate, 31500 Muret",
-                  "appreciationPP":"Elève parfaite",
-                  "matieres":
-                  [
-                    {
-                      "nom":"Physiologie",
-                      "coef":4.0,
-                      "appreciation":"Dynamique et investie",
-                      "notes":
-                      [
-                        {
-                          "nom":"DST n°1",
-                          "coef": 2.0,
-                          "valeur":15.0
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "nom": "Nantes",
-      "etablissements":
-      [
-        {
-          "nom": "Maupertuis",
-          "adresse": "179 Avenue de Tour",
-          "classes":
-          [
-            {
-              "nom": "Botanique",
-              "anneeSco": "2018",
-              "PP": "Carron",
-              "eleves":
-              [
-                {
-                  "nom": "Alcher",
-                  "prenom": "Estelle",
-                  "adresse": "32 rue Patate, 31500 Muret",
-                  "appreciationPP": "Elève parfaite",
-                  "matieres":
-                  [
-                    {
                       "nom": "Biologie",
-                      "coef": 4.0,
-                      "appreciation": "Dynamique des cellules",
-                      "notes":
-                      [
+                      "notes": [
                         {
-                          "nom": "SVT n°1",
+                          "coef": 1.0,
+                          "nom": "DST n1",
+                          "valeur": 4.0
+                        }
+                      ]
+                    }
+                  ],
+                  "nom": "Targa",
+                  "prenom": "Camille"
+                }
+              ],
+              "nom": "Esthe1"
+            }
+          ],
+          "nom": "Rose Carmin"
+        }
+      ],
+      "nom": "Toulouse"
+    },
+    {
+      "etablissements": [
+        {
+          "adresse": "179 Avenue de Muret",
+          "classes": [
+            {
+              "PP": "Carron",
+              "anneeSco": "2018",
+              "eleves": [
+                {
+                  "adresse": "32 rue Patate, 31500 Muret",
+                  "appreciationPP": "Eleve parfaite",
+                  "matieres": [
+                    {
+                      "appreciation": "Dynamique et investie",
+                      "coef": 4.0,
+                      "nom": "Physiologie",
+                      "notes": [
+                        {
                           "coef": 2.0,
+                          "nom": "DST 1",
                           "valeur": 15.0
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "nom": "Alcher",
+                  "prenom": "Estelle"
                 }
-              ]
+              ],
+              "nom": "Diet2"
             }
-          ]
+          ],
+          "nom": "AdonisProut"
         }
-      ]
+      ],
+      "nom": "Tarbes"
     }
   ]
 }
