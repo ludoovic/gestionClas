@@ -2,23 +2,35 @@ import sys, json
 from PySide2.QtWidgets import (QApplication, QWidget, QMainWindow)
 from PySide2 import QtCore, QtUiTools
 
-from ui_elevRechDesign import Ui_MainWindow
+from ui_elevRechDesign import Ui_mainWindow
 
 filename = "dataNotes.json"
+
+def indexAcadSelec(acadSelec, dico):
+    cpt = 0
+    for academie in dico:
+        if academie["nom"] == acadSelec:
+            return cpt
+            break
+        else:
+            cpt += 1
+
+#     self.ui.cbAcad.clicked.connect(self.cbAcadClicked)
+# def 
 
 class eleveRech(QMainWindow):
     def __init__(self):
         super(eleveRech, self).__init__()
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_mainWindow()
         self.ui.setupUi(self)
 
         global filename
         self.mesData = {}
-
         self.mesdata = self.lireJSON(filename)
-
         self.updateAcademies()
-
+        self.updateEtablissements()
+        self.updateClasses()
+        #self.updateMatieres()
 
     def updateAcademies(self):
         self.ui.cbAcad.clear()
@@ -27,42 +39,40 @@ class eleveRech(QMainWindow):
             malisteAcad.append(a["nom"])
         self.ui.cbAcad.addItems(malisteAcad)
 
+        print("l'index de l'academie de Toulouse est:")
+        print(indexAcadSelec("Tarbes", self.mesdata["academies"]))
+        print()
+
     def updateEtablissements(self):
         self.ui.cbEtab.clear()
         malisteEtab = []
-        for e in self.mesdata["academies"][self.ui.cbAcad.currentIndex()]["etablissements"]:
+        for e in self.mesdata["academies"][0]["etablissements"]:
             malisteEtab.append(e["nom"])
-        self.ui.cbEtab.addItem(malisteEtab)
+        self.ui.cbEtab.addItems(malisteEtab)
 
-    def updateClasse(self):
+    def updateClasses(self):
         self.ui.cbClass.clear()
-        for a in self.dico["academies"][self.ui.cbAcademie.currentIndex()]["etablissements"]:
-            self.ui.cbClass.addItem(a["nom"])
+        malisteClass = []
+        for c in self.mesdata["academies"][0]["etablissements"][0]["classes"]:
+            malisteClass.append(c["nom"])
+        self.ui.cbClass.addItems(malisteClass)
 
-    # self.ui.lecture.clicked.connect(self.lectureClicked)
-    # self.mediaPlayer = QMediaPlayer()
-    # self.mediaPlayer.setVideoOutput(self.ui.ecran)
-    #
-    # self.ui.pause.clicked.connect(self.pauseClicked)
-    # self.ui.suivant.clicked.connect(self.suivantClicked)
-    # self.ui.stop.clicked.connect(self.stopClicked)
-    # self.ui.precedent.clicked.connect(self.precedentClicked)
 
-    #
-    # def updateMatiere(self):
+
+    # afficher les établissements de l'academie de Toulouse (selectionné dans la combobox academies)
+    # afficher les classes de l'etablissement de Toulouse (selectionné dans la combobox toulouse)
+    # def updateMatieres(self):
     #     self.ui.cbMatier.clear()
-    #     dicoClasse = self.dico["academies"][self.ui.academie.currentIndex()]["etablissements"]:
-    #     listeMatieres = []
-    #     for eleve in dicoClasse["eleves"]:
-    #         for matiere in eleve[matieres["nom"]]:
-    #         listeMatieresUniques = np.unique(listeMatieres)
-    #
-    #
+    #     malisteMatier = []
+    #     for m in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["matieres"]:
+    #         malisteMatier.append(m["nom"])
+    #     self.ui.cbMatier.addItems(malisteMatier)
+
     # def updateSaisieEleve(self):
     #     cpt = 0
     #     self.ui.twNotes.clear()
     #     self.ui.twNotes.setColumnCount(2)
-    #     dicoClasse = self.dico["academies"][self.ui.cbAcademie.currentIndex()]["etablissements"]
+    #     mesdata = self.dico["academies"][self.ui.cbAcademie.currentIndex()]["etablissements"]
     #     for eleve in dicoClasse["eleves"]:
     #         for matiere in eleve["matieres"]:
     #             mat = self.ui.cbMatier.currentText()
@@ -77,6 +87,15 @@ class eleveRech(QMainWindow):
     #                 cpt = cpt + 1
     #
     #     self.ui.twNotes.setHorizontalHeaderLabels(["Nom", "Note"])
+
+    # self.ui.lecture.clicked.connect(self.lectureClicked)
+    # self.mediaPlayer = QMediaPlayer()
+    # self.mediaPlayer.setVideoOutput(self.ui.ecran)
+    #
+    # self.ui.pause.clicked.connect(self.pauseClicked)
+    # self.ui.suivant.clicked.connect(self.suivantClicked)
+    # self.ui.stop.clicked.connect(self.stopClicked)
+    # self.ui.precedent.clicked.connect(self.precedentClicked)
 
     def lireJSON(self, filename):
         with open(filename) as json_file:
