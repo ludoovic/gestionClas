@@ -15,8 +15,6 @@ def indexAcadSelec(acadSelec, dico):
         else:
             cpt += 1
 
-#     self.ui.cbAcad.clicked.connect(self.cbAcadClicked)
-
 class eleveRech(QMainWindow):
     def __init__(self):
         super(eleveRech, self).__init__()
@@ -29,7 +27,15 @@ class eleveRech(QMainWindow):
         self.updateAcademies()
         self.updateEtablissements()
         self.updateClasses()
-        #self.updateMatieres()
+        self.updateEleves()
+        self.updateMatieres()
+
+        self.ui.cbAcad.currentIndexChanged.connect(self.acadChanged)
+        self.ui.cbEtab.currentIndexChanged.connect(self.etabChanged)
+        self.ui.cbClass.currentIndexChanged.connect(self.classChanged)
+        self.ui.cbElev.currentIndexChanged.connect(self.elevChanged)
+        self.ui.cbMatier.currentIndexChanged.connect(self.matierChanged)
+
 
     def updateAcademies(self):
         self.ui.cbAcad.clear()
@@ -39,8 +45,7 @@ class eleveRech(QMainWindow):
         self.ui.cbAcad.addItems(malisteAcad)
 
         print("l'index de l'academie de Toulouse est:")
-        print(indexAcadSelec("Tarbes", self.mesdata["academies"]))
-        print()
+        print(indexAcadSelec("Toulouse", self.mesdata["academies"]))
 
     def updateEtablissements(self):
         self.ui.cbEtab.clear()
@@ -56,16 +61,39 @@ class eleveRech(QMainWindow):
             malisteClass.append(c["nom"])
         self.ui.cbClass.addItems(malisteClass)
 
+    def updateEleves(self):
+        self.ui.cbElev.clear()
+        malisteElev = []
+        for elev in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["eleves"]:
+            malisteElev.append(elev["nom"])
+        self.ui.cbElev.addItems(malisteElev)
 
+    def updateMatieres(self):
+        self.ui.cbMatier.clear()
+        malisteMatier = []
+        for m in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["eleves"][0]["matieres"]:
+            malisteMatier.append(m["nom"])
+        self.ui.cbMatier.addItems(malisteMatier)
 
-    # afficher les établissements de l'academie de Toulouse (selectionné dans la combobox academies)
-    # afficher les classes de l'etablissement de Toulouse (selectionné dans la combobox toulouse)
-    # def updateMatieres(self):
-    #     self.ui.cbMatier.clear()
-    #     malisteMatier = []
-    #     for m in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["matieres"]:
-    #         malisteMatier.append(m["nom"])
-    #     self.ui.cbMatier.addItems(malisteMatier)
+    def acadChanged(self):
+        indexAcad = indexAcadSelec(self.ui.cbAcad.currentText(), self.mesdata["academies"])
+        self.ui.cbEtab.clear()
+        malisteEtab = []
+        for e in self.mesdata["academies"][indexAcad]["etablissements"]:
+            malisteEtab.append(e["nom"])
+        self.ui.cbEtab.addItems(malisteEtab)
+
+    def etabChanged(self):
+        print(self.ui.cbEtab.currentText())
+
+    def classChanged(self):
+        print(self.ui.cbClass.currentText())
+
+    def elevChanged(self):
+        print(self.ui.cbElev.currentText())
+
+    def matierChanged(self):
+        print(self.ui.cbMatier.currentText())
 
     # def updateSaisieEleve(self):
     #     cpt = 0

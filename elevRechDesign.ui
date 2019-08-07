@@ -21,9 +21,9 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_7">
+   <layout class="QVBoxLayout" name="verticalLayout_9">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -67,6 +67,20 @@
        </layout>
       </item>
       <item>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="QLabel" name="labElev">
+          <property name="text">
+           <string>Eleves</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cbElev"/>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
          <widget class="QLabel" name="labMatier">
@@ -96,7 +110,7 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QLabel" name="labElev">
+         <widget class="QLabel" name="labElevRech">
           <property name="text">
            <string>Eleves</string>
           </property>
