@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'elevRechDesign.ui',
-# licensing of 'elevRechDesign.ui' applies.
+# Form implementation generated from reading ui file '/home/octave/PycharmProjects/gestionClas/elevRechDesign.ui',
+# licensing of '/home/octave/PycharmProjects/gestionClas/elevRechDesign.ui' applies.
 #
-# Created: Sat Jul 27 16:36:53 2019
+# Created: Wed Aug  7 08:41:16 2019
 #      by: pyside2-uic  running on PySide2 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1093, 853)
+class Ui_mainWindow(object):
+    def setupUi(self, mainWindow):
+        mainWindow.setObjectName("mainWindow")
+        mainWindow.resize(1093, 853)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setWeight(75)
         font.setBold(True)
-        MainWindow.setFont(font)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        mainWindow.setFont(font)
+        self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
@@ -48,9 +48,9 @@ class Ui_MainWindow(object):
         self.labClas = QtWidgets.QLabel(self.centralwidget)
         self.labClas.setObjectName("labClas")
         self.verticalLayout_3.addWidget(self.labClas)
-        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox.setObjectName("comboBox")
-        self.verticalLayout_3.addWidget(self.comboBox)
+        self.cbClass = QtWidgets.QComboBox(self.centralwidget)
+        self.cbClass.setObjectName("cbClass")
+        self.verticalLayout_3.addWidget(self.cbClass)
         self.horizontalLayout.addLayout(self.verticalLayout_3)
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setObjectName("verticalLayout_5")
@@ -95,26 +95,26 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.verticalLayout_7.addWidget(self.tableWidget)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1093, 27))
+        mainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(mainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1093, 33))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        mainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(mainWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        mainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(mainWindow)
+        QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1))
-        self.labAcad.setText(QtWidgets.QApplication.translate("MainWindow", "Academies", None, -1))
-        self.labEtab.setText(QtWidgets.QApplication.translate("MainWindow", "Etablissements", None, -1))
-        self.labClas.setText(QtWidgets.QApplication.translate("MainWindow", "Classes", None, -1))
-        self.labMatier.setText(QtWidgets.QApplication.translate("MainWindow", "Matieres", None, -1))
-        self.labElev.setText(QtWidgets.QApplication.translate("MainWindow", "Eleves", None, -1))
-        self.labRech.setText(QtWidgets.QApplication.translate("MainWindow", "Recherche", None, -1))
-        self.pbOK.setText(QtWidgets.QApplication.translate("MainWindow", "Ok", None, -1))
-        self.lablistResult.setText(QtWidgets.QApplication.translate("MainWindow", "liste de resultats", None, -1))
+    def retranslateUi(self, mainWindow):
+        mainWindow.setWindowTitle(QtWidgets.QApplication.translate("mainWindow", "MainWindow", None, -1))
+        self.labAcad.setText(QtWidgets.QApplication.translate("mainWindow", "Academies", None, -1))
+        self.labEtab.setText(QtWidgets.QApplication.translate("mainWindow", "Etablissements", None, -1))
+        self.labClas.setText(QtWidgets.QApplication.translate("mainWindow", "Classes", None, -1))
+        self.labMatier.setText(QtWidgets.QApplication.translate("mainWindow", "Matieres", None, -1))
+        self.labElev.setText(QtWidgets.QApplication.translate("mainWindow", "Eleves", None, -1))
+        self.labRech.setText(QtWidgets.QApplication.translate("mainWindow", "Recherche", None, -1))
+        self.pbOK.setText(QtWidgets.QApplication.translate("mainWindow", "Ok", None, -1))
+        self.lablistResult.setText(QtWidgets.QApplication.translate("mainWindow", "liste de resultats", None, -1))
 

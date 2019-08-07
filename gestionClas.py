@@ -16,7 +16,7 @@ def indexAcadSelec(acadSelec, dico):
             cpt += 1
 
 #     self.ui.cbAcad.clicked.connect(self.cbAcadClicked)
-# def 
+# def
 
 class eleveRech(QMainWindow):
     def __init__(self):
