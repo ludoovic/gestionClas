@@ -1,8 +1,13 @@
 import sys, json
-from PySide2.QtWidgets import (QApplication, QWidget, QMainWindow)
+from PySide2.QtWidgets import (QApplication, QWidget, QMainWindow, QDialog, QTableWidgetItem)
 from PySide2 import QtCore, QtUiTools
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 
 from ui_elevRechDesign import Ui_mainWindow
+from ui_ficheeleve import Ui_Dialog
+
 
 filename = "dataNotes.json"
 
@@ -10,46 +15,37 @@ def indexAcadSelec(acadSelec, dico):
     cpt = 0
     for academie in dico:
         if academie["nom"] == acadSelec:
-            return cpt
             break
         else:
             cpt += 1
+    return cpt
 
 def indexEtabSelec(etabSelec, dico):
     cpt = 0
     for etablissement in dico:
         if etablissement["nom"] == etabSelec:
-            return cpt
             break
         else:
             cpt += 1
+    return cpt
 
 def indexClassSelec(classSelec, dico):
     cpt = 0
     for classe in dico:
         if classe["nom"] == classSelec:
-            return cpt
             break
         else:
             cpt += 1
+    return cpt
 
 def indexElevSelec(elevSelec, dico):
     cpt = 0
     for eleve in dico:
         if eleve["nom"] == elevSelec:
-            return cpt
             break
         else:
             cpt += 1
-
-def indexMatierSelec(matierSelec, dico):
-    cpt = 0
-    for matiere in dico:
-        if matiere["nom"] == matierSelec:
-            return cpt
-            break
-        else:
-            cpt += 1
+    return cpt
 
 class eleveRech(QMainWindow):
     def __init__(self):
@@ -63,14 +59,12 @@ class eleveRech(QMainWindow):
         self.initAcademies()
         self.initEtablissements()
         self.initClasses()
-        self.initEleves()
-        self.initMatieres()
+        self.elevChanged()
 
         self.ui.cbAcad.currentIndexChanged.connect(self.acadChanged)
         self.ui.cbEtab.currentIndexChanged.connect(self.etabChanged)
         self.ui.cbClass.currentIndexChanged.connect(self.classChanged)
-        self.ui.cbElev.currentIndexChanged.connect(self.elevChanged)
-        self.ui.cbMatier.currentIndexChanged.connect(self.matierChanged)
+        self.ui.tableWidget.cellDoubleClicked.connect(self.affFichEl)
 
     def initAcademies(self):
         self.ui.cbAcad.clear()
@@ -93,19 +87,6 @@ class eleveRech(QMainWindow):
             malisteClass.append(c["nom"])
         self.ui.cbClass.addItems(malisteClass)
 
-    def initEleves(self):
-        self.ui.cbElev.clear()
-        malisteElev = []
-        for elev in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["eleves"]:
-            malisteElev.append(elev["nom"])
-        self.ui.cbElev.addItems(malisteElev)
-
-    def initMatieres(self):
-        self.ui.cbMatier.clear()
-        malisteMatier = []
-        for m in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["eleves"][0]["matieres"]:
-            malisteMatier.append(m["nom"])
-        self.ui.cbMatier.addItems(malisteMatier)
 ###############################################################################################
 
     def acadChanged(self):
@@ -116,70 +97,72 @@ class eleveRech(QMainWindow):
         for e in self.mesdata["academies"][indexAcad]["etablissements"]:
             malisteEtab.append(e["nom"])
         self.ui.cbEtab.addItems(malisteEtab)
-        self.etabChanged(indexAcad)
+        self.etabChanged()
         self.ui.cbEtab.currentIndexChanged.connect(self.etabChanged)
 
-    def etabChanged(self, aselect=0):
-        indexEtab = indexEtabSelec(self.ui.cbEtab.currentText(), self.mesdata["academies"][aselect]["etablissements"])
+    def etabChanged(self):
+        indexAcad = indexAcadSelec(self.ui.cbAcad.currentText(), self.mesdata["academies"])
+        indexEtab = indexEtabSelec(self.ui.cbEtab.currentText(), self.mesdata["academies"][indexAcad]["etablissements"])
         self.ui.cbClass.currentIndexChanged.disconnect(self.classChanged)
         self.ui.cbClass.clear()
         malisteClass = []
-        for c in self.mesdata["academies"][aselect]["etablissements"][indexEtab]["classes"]:
+        print("indexEtab"+str(indexEtab))
+        for c in self.mesdata["academies"][indexAcad]["etablissements"][indexEtab]["classes"]:
             malisteClass.append(c["nom"])
         self.ui.cbClass.addItems(malisteClass)
-        self.classChanged(aselect, indexEtab)
+        self.classChanged()
         self.ui.cbClass.currentIndexChanged.connect(self.classChanged)
 
-    def classChanged(self, aselect=0, eselect=0):
-        indexClass = indexClassSelec(self.ui.cbClass.currentText(), self.mesdata["academies"][aselect]["etablissements"][eselect]["classes"])
-        self.ui.cbElev.currentIndexChanged.disconnect(self.elevChanged)
-        self.ui.cbElev.clear()
+    def classChanged(self):
+        indexAcad = indexAcadSelec(self.ui.cbAcad.currentText(), self.mesdata["academies"])
+        indexEtab = indexEtabSelec(self.ui.cbEtab.currentText(), self.mesdata["academies"][indexAcad]["etablissements"])
+        indexClass = indexClassSelec(self.ui.cbClass.currentText(), self.mesdata["academies"][indexAcad]["etablissements"][indexEtab]["classes"])
         malisteElev = []
-        for elev in self.mesdata["academies"][aselect]["etablissements"][eselect]["classes"][indexClass]["eleves"]:
+        for elev in self.mesdata["academies"][indexAcad]["etablissements"][indexEtab]["classes"][indexClass]["eleves"]:
             malisteElev.append(elev["nom"])
-        self.ui.cbElev.addItems(malisteElev)
-        self.elevChanged(aselect, eselect, indexClass)
-        self.ui.cbElev.currentIndexChanged.connect(self.elevChanged)
+        self.elevChanged()
 
-    def elevChanged(self, aselect=0, eselect=0, elselect=0):
-        # indexElev = indexElevSelec(self.ui.cbElev.currentText(), self.mesdata["eleves"])
-        # self.ui.cbMatier = []
-        # for m in self.mesdata["Eleves"][indexElev]["matieres"]:
-        #     malisteElev.append(matier["nom"])
-        # self.ui.cbMatier.addItems(malisteMatier)
-        print(aselect, eselect, elselect)
+    def elevChanged(self):
+        indexAcad = indexAcadSelec(self.ui.cbAcad.currentText(), self.mesdata["academies"])
+        indexEtab = indexEtabSelec(self.ui.cbEtab.currentText(), self.mesdata["academies"][indexAcad]["etablissements"])
+        indexClass = indexClassSelec(self.ui.cbClass.currentText(),self.mesdata["academies"][indexAcad]["etablissements"][indexEtab]["classes"])
+        listelev = self.mesdata["academies"][indexAcad]["etablissements"][indexEtab]["classes"][indexClass]["eleves"]
 
-    def matierChanged(self):
-        print(self.ui.cbMatier.currentText())
+        self.ui.tableWidget.setRowCount(len(listelev))
+        self.ui.tableWidget.setColumnCount(2)
+        cpt = 0
+        for elev in listelev:
+            self.ui.tableWidget.setItem(cpt, 0, QTableWidgetItem(elev["nom"]))
+            self.ui.tableWidget.setItem(cpt, 1, QTableWidgetItem(elev["prenom"]))
+            cpt += 1
 
-    # def initSaisieEleve(self):
-    #     cpt = 0
-    #     self.ui.twNotes.clear()
-    #     self.ui.twNotes.setColumnCount(2)
-    #     mesdata = self.dico["academies"][self.ui.cbAcademie.currentIndex()]["etablissements"]
-    #     for eleve in dicoClasse["eleves"]:
-    #         for matiere in eleve["matieres"]:
-    #             mat = self.ui.cbMatier.currentText()
-    #             if matiere["nom"] == mat:
-    #                 nomE = eleve["nom"]
-    #                 self.ui.twNotes.setRowCount(cpt+1)
-    #                 itemE = QTableWidgetItem(nomE)
-    #                 self.ui.twNotes.setItem(cpt, 0, itemE)
-    #                 spinB = QDoubleSpinBox()
-    #                 spinB.setProperty("nom", nomE)
-    #                 self.ui.twNotes;setCellWidget(cpt, 1, spinB)
-    #                 cpt = cpt + 1
-    #
-    #     self.ui.twNotes.setHorizontalHeaderLabels(["Nom", "Note"])
+    def affFichEl(self):
+        wAff = QDialog()
+        uiAff = Ui_Dialog()
+        uiAff.setupUi(wAff)
 
-    # self.ui.lecture.clicked.connect(self.lectureClicked)
-    # self.mediaPlayer = QMediaPlayer()
-    # self.mediaPlayer.setVideoOutput(self.ui.ecran)
-    #
-    # self.ui.pause.clicked.connect(self.pauseClicked)
-    # self.ui.suivant.clicked.connect(self.suivantClicked)
-    # self.ui.stop.clicked.connect(self.stopClicked)
-    # self.ui.precedent.clicked.connect(self.precedentClicked)
+        freq = [np.random.randint(100, 200), np.random.randint(100, 200), np.random.randint(100, 200),
+                np.random.randint(200, 300),
+                np.random.randint(300, 400), np.random.randint(500, 600), np.random.randint(700, 800),
+                np.random.randint(700, 800),
+                np.random.randint(500, 600), np.random.randint(300, 400), np.random.randint(200, 300),
+                np.random.randint(100, 200)]
+        mois = range(1, 13)
+
+        fig, ax = plt.subplots()
+        ax.plot(mois, freq)
+
+        plt.xticks(np.arange(min(mois), max(mois) + 1, 1.0))
+
+        ax.set(xlabel='mois', ylabel='fréq.',
+               title='Fréquentation du centre')
+        ax.grid(True, linestyle='dotted')
+
+        canvas = FigureCanvas(fig)
+        uiAff.horizontalLayout.addWidget(canvas)
+        self.setLayout(uiAff.horizontalLayout)
+
+        wAff.exec_()
 
     def lireJSON(self, filename):
         with open(filename) as json_file:
