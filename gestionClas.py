@@ -15,6 +15,42 @@ def indexAcadSelec(acadSelec, dico):
         else:
             cpt += 1
 
+def indexEtabSelec(etabSelec, dico):
+    cpt = 0
+    for etablissement in dico:
+        if etablissement["nom"] == etabSelec:
+            return cpt
+            break
+        else:
+            cpt += 1
+
+def indexClassSelec(classSelec, dico):
+    cpt = 0
+    for classe in dico:
+        if classe["nom"] == classSelec:
+            return cpt
+            break
+        else:
+            cpt += 1
+
+def indexElevSelec(elevSelec, dico):
+    cpt = 0
+    for eleve in dico:
+        if eleve["nom"] == elevSelec:
+            return cpt
+            break
+        else:
+            cpt += 1
+
+def indexMatierSelec(matierSelec, dico):
+    cpt = 0
+    for matiere in dico:
+        if matiere["nom"] == matierSelec:
+            return cpt
+            break
+        else:
+            cpt += 1
+
 class eleveRech(QMainWindow):
     def __init__(self):
         super(eleveRech, self).__init__()
@@ -24,11 +60,11 @@ class eleveRech(QMainWindow):
         global filename
         self.mesData = {}
         self.mesdata = self.lireJSON(filename)
-        self.updateAcademies()
-        self.updateEtablissements()
-        self.updateClasses()
-        self.updateEleves()
-        self.updateMatieres()
+        self.initAcademies()
+        self.initEtablissements()
+        self.initClasses()
+        self.initEleves()
+        self.initMatieres()
 
         self.ui.cbAcad.currentIndexChanged.connect(self.acadChanged)
         self.ui.cbEtab.currentIndexChanged.connect(self.etabChanged)
@@ -36,66 +72,87 @@ class eleveRech(QMainWindow):
         self.ui.cbElev.currentIndexChanged.connect(self.elevChanged)
         self.ui.cbMatier.currentIndexChanged.connect(self.matierChanged)
 
-
-    def updateAcademies(self):
+    def initAcademies(self):
         self.ui.cbAcad.clear()
         malisteAcad = []
         for a in self.mesdata["academies"]:
             malisteAcad.append(a["nom"])
         self.ui.cbAcad.addItems(malisteAcad)
 
-        print("l'index de l'academie de Toulouse est:")
-        print(indexAcadSelec("Toulouse", self.mesdata["academies"]))
-
-    def updateEtablissements(self):
+    def initEtablissements(self):
         self.ui.cbEtab.clear()
         malisteEtab = []
         for e in self.mesdata["academies"][0]["etablissements"]:
             malisteEtab.append(e["nom"])
         self.ui.cbEtab.addItems(malisteEtab)
 
-    def updateClasses(self):
+    def initClasses(self):
         self.ui.cbClass.clear()
         malisteClass = []
         for c in self.mesdata["academies"][0]["etablissements"][0]["classes"]:
             malisteClass.append(c["nom"])
         self.ui.cbClass.addItems(malisteClass)
 
-    def updateEleves(self):
+    def initEleves(self):
         self.ui.cbElev.clear()
         malisteElev = []
         for elev in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["eleves"]:
             malisteElev.append(elev["nom"])
         self.ui.cbElev.addItems(malisteElev)
 
-    def updateMatieres(self):
+    def initMatieres(self):
         self.ui.cbMatier.clear()
         malisteMatier = []
         for m in self.mesdata["academies"][0]["etablissements"][0]["classes"][0]["eleves"][0]["matieres"]:
             malisteMatier.append(m["nom"])
         self.ui.cbMatier.addItems(malisteMatier)
+###############################################################################################
 
     def acadChanged(self):
         indexAcad = indexAcadSelec(self.ui.cbAcad.currentText(), self.mesdata["academies"])
+        self.ui.cbEtab.currentIndexChanged.disconnect(self.etabChanged)
         self.ui.cbEtab.clear()
         malisteEtab = []
         for e in self.mesdata["academies"][indexAcad]["etablissements"]:
             malisteEtab.append(e["nom"])
         self.ui.cbEtab.addItems(malisteEtab)
+        self.etabChanged(indexAcad)
+        self.ui.cbEtab.currentIndexChanged.connect(self.etabChanged)
 
-    def etabChanged(self):
-        print(self.ui.cbEtab.currentText())
+    def etabChanged(self, aselect=0):
+        indexEtab = indexEtabSelec(self.ui.cbEtab.currentText(), self.mesdata["academies"][aselect]["etablissements"])
+        self.ui.cbClass.currentIndexChanged.disconnect(self.classChanged)
+        self.ui.cbClass.clear()
+        malisteClass = []
+        for c in self.mesdata["academies"][aselect]["etablissements"][indexEtab]["classes"]:
+            malisteClass.append(c["nom"])
+        self.ui.cbClass.addItems(malisteClass)
+        self.classChanged(aselect, indexEtab)
+        self.ui.cbClass.currentIndexChanged.connect(self.classChanged)
 
-    def classChanged(self):
-        print(self.ui.cbClass.currentText())
+    def classChanged(self, aselect=0, eselect=0):
+        indexClass = indexClassSelec(self.ui.cbClass.currentText(), self.mesdata["academies"][aselect]["etablissements"][eselect]["classes"])
+        self.ui.cbElev.currentIndexChanged.disconnect(self.elevChanged)
+        self.ui.cbElev.clear()
+        malisteElev = []
+        for elev in self.mesdata["academies"][aselect]["etablissements"][eselect]["classes"][indexClass]["eleves"]:
+            malisteElev.append(elev["nom"])
+        self.ui.cbElev.addItems(malisteElev)
+        self.elevChanged(aselect, eselect, indexClass)
+        self.ui.cbElev.currentIndexChanged.connect(self.elevChanged)
 
-    def elevChanged(self):
-        print(self.ui.cbElev.currentText())
+    def elevChanged(self, aselect=0, eselect=0, elselect=0):
+        # indexElev = indexElevSelec(self.ui.cbElev.currentText(), self.mesdata["eleves"])
+        # self.ui.cbMatier = []
+        # for m in self.mesdata["Eleves"][indexElev]["matieres"]:
+        #     malisteElev.append(matier["nom"])
+        # self.ui.cbMatier.addItems(malisteMatier)
+        print(aselect, eselect, elselect)
 
     def matierChanged(self):
         print(self.ui.cbMatier.currentText())
 
-    # def updateSaisieEleve(self):
+    # def initSaisieEleve(self):
     #     cpt = 0
     #     self.ui.twNotes.clear()
     #     self.ui.twNotes.setColumnCount(2)
