@@ -29,7 +29,7 @@
                           "valeur": 12.0
                         },
                         {
-                          "coefficient": 2.0,
+                          "coef": 2.0,
                           "nom": "DST n3",
                           "valeur": 10.0
                         }
@@ -76,7 +76,7 @@
                           "valeur": 12.0
                         },
                         {
-                          "coefficient": 2.0,
+                          "coef": 2.0,
                           "nom": "DST n3",
                           "valeur": 15.0
                         }
@@ -123,7 +123,7 @@
                           "valeur": 15.0
                         },
                         {
-                          "coefficient": 2.0,
+                          "coef": 2.0,
                           "nom": "DST n3",
                           "valeur": 11.0
                         }
@@ -257,7 +257,7 @@
                       ]
                     }
                   ],
-                  "nom": "Alcher",
+                  "nom": "Alchere",
                   "prenom": "Estelle"
                 }
               ],

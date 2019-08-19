@@ -52,10 +52,6 @@ class eleveRech(QMainWindow):
         self.ui = Ui_mainWindow()
         self.ui.setupUi(self)
 
-        self.wAff = QDialog()
-        self.uiAff = Ui_Dialog()
-        self.uiAff.setupUi(self.wAff)
-
         global filename
         self.mesData = {}
         self.mesdata = self.lireJSON(filename)
@@ -182,63 +178,75 @@ class eleveRech(QMainWindow):
 
 
     def affFichEl(self):
-        print(self.ui.tableWidget.currentItem().text())
+
+        self.wAff = QDialog()
+        self.uiAff = Ui_Dialog()
+        self.uiAff.setupUi(self.wAff)
 
         labels = []
         for a in self.mesdata["academies"]:
             for e in a["etablissements"]:
                 for c in e["classes"]:
                     for elev in c["eleves"]:
-                        if elev['nom']  == self.ui.tableWidget.currentItem().text():
-                            print("Trouvé !")
+                        # aJouter ici la calcul de la moyenne de la classe en faisant une boucle ... pour chaque
+                        # eleve ... de la classe.
+                        if elev['nom'] == self.ui.tableWidget.currentItem().text():
+                            listmoy = []
+                            self.uiAff.nom.setText(elev["nom"])
+                            self.uiAff.prenom.setText(elev["prenom"])
+                            self.uiAff.adresse.setText(elev["adresse"])
+                            truc = elev["prenom"]
+                            bidule = elev["nom"]
+                            for matier in elev["matieres"]:
+                                print(matier["nom"])
+                                sumnotcoef = 0
+                                sumcoef = 0
+                                for note in matier["notes"]:
+                                    sumnotcoef += note["valeur"] * note["coef"]
+                                    sumcoef += note["coef"]
+                                moyelev = sumnotcoef / sumcoef
+                                listmoy.append([matier["nom"], moyelev])
+        moysE = []
+        summo = 0
+        for elem in listmoy:
+            labels.append((elem[0]))
+            moysE.append(elem[1])
+        for mo in moysE:
+            summo += mo
+        moyengel = summo / len(moysE)
+        aprecia = ""
+        if moyengel <= 13.5:
+            aprecia = "continue essaie encore ! "
+        elif moyengel > 13.5:
+            aprecia = " la creme de la creme !"
 
-
-        # freq = [np.random.randint(100, 200), np.random.randint(100, 200), np.random.randint(100, 200),
-        #         np.random.randint(200, 300),
-        #         np.random.randint(300, 400), np.random.randint(500, 600), np.random.randint(700, 800),
-        #         np.random.randint(700, 800),
-        #         np.random.randint(500, 600), np.random.randint(300, 400), np.random.randint(200, 300),
-        #         np.random.randint(100, 200)]
-        # mois = range(1, 13)
-        #
-        # fig, ax = plt.subplots()
-        # ax.plot(mois, freq)
-        #
-        # plt.xticks(np.arange(min(mois), max(mois) + 1, 1.0))
-        #
-        # ax.set(xlabel='mois', ylabel='fréq.',
-        #        title='Fréquentation du centre')
-        # ax.grid(True, linestyle='dotted')
-        #
-        # canvas = FigureCanvas(fig)
-        # uiAff.horizontalLayout.addWidget(canvas)
-        # self.setLayout(uiAff.horizontalLayout)
-
-        # angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
+        print(labels, moysE)
+        angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
         # # close the plot
-        # moyenneEleveR = np.concatenate((moysE, [moysE[0]]))
+        moyenneEleveR = np.concatenate((moysE, [moysE[0]]))
         # moyenneClasseR = np.concatenate((listMoyC, [listMoyC[0]]))
-        # angles = np.concatenate((angles, [angles[0]]))
-        #
-        # self.fig = plt.figure()
-        # ax = self.fig.add_subplot(111, polar=True)
-        # ax.plot(angles, moyenneEleveR, 'o-', linewidth=2, label="Elève")
-        # ax.fill(angles, moyenneEleveR, alpha=0.2)
-        # ax.plot(angles, moyenneClasseR, 'o-', linewidth=2, label="Classe")
-        # ax.fill(angles, moyenneClasseR, alpha=0.2)
-        # ax.set_thetagrids(angles * 180 / np.pi, labels)
-        # plt.yticks([2, 4, 6, 8, 10, 12, 14, 16, 18], color="grey", size=7)
-        # plt.ylim(0, 20)
-        #
-        # ax.set_title(eleveR)
-        # ax.grid(True)
-        # plt.legend(loc='upper right')
-        #
-        # self.canvas = FigureCanvas(self.fig)  # the matplotlib canvas
-        # self.ui.qRadar.addWidget(self.canvas)
-        #
-        # self.setLayout(self.ui.qRadar)
-        # self.show()
+        moyenneClasseR =[14,12,14]
+        angles = np.concatenate((angles, [angles[0]]))
+
+        self.fig = plt.figure()
+        ax = self.fig.add_subplot(111, polar=True)
+        ax.plot(angles, moyenneEleveR, 'o-', linewidth=2, label="Elève")
+        ax.fill(angles, moyenneEleveR, alpha=0.2)
+        ax.plot(angles, moyenneClasseR, 'o-', linewidth=2, label="Classe")
+        ax.fill(angles, moyenneClasseR, alpha=0.2)
+        ax.set_thetagrids(angles * 180 / np.pi, labels)
+        plt.yticks([2, 4, 6, 8, 10, 12, 14, 16, 18], color="grey", size=7)
+        plt.ylim(0, 20)
+
+        ax.set_title(f'{bidule} {truc} : {aprecia}')
+        ax.grid(True)
+        plt.legend(loc='upper right')
+
+        self.canvas = FigureCanvas(self.fig)  # the matplotlib canvas
+        self.uiAff.radarchart.addWidget(self.canvas)
+
+        self.setLayout(self.uiAff.radarchart)
+        self.show()
 
         self.wAff.exec_()
 
