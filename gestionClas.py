@@ -1,5 +1,5 @@
 import sys, json
-from PySide2.QtWidgets import (QApplication, QWidget, QMainWindow, QDialog, QTableWidgetItem)
+from PySide2.QtWidgets import (QApplication, QWidget, QMainWindow, QDialog, QTableWidgetItem, QInputDialog, QDoubleSpinBox)
 from PySide2 import QtCore, QtUiTools
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,7 +7,6 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 
 from ui_elevRechDesign import Ui_mainWindow
 from ui_ficheeleve import Ui_Dialog
-
 
 filename = "dataNotes.json"
 
@@ -53,18 +52,24 @@ class eleveRech(QMainWindow):
         self.ui = Ui_mainWindow()
         self.ui.setupUi(self)
 
+        self.wAff = QDialog()
+        self.uiAff = Ui_Dialog()
+        self.uiAff.setupUi(self.wAff)
+
         global filename
         self.mesData = {}
         self.mesdata = self.lireJSON(filename)
-        self.initAcademies()
-        self.initEtablissements()
-        self.initClasses()
-        self.elevChanged()
 
         self.ui.cbAcad.currentIndexChanged.connect(self.acadChanged)
         self.ui.cbEtab.currentIndexChanged.connect(self.etabChanged)
         self.ui.cbClass.currentIndexChanged.connect(self.classChanged)
+        self.ui.cbMatier.currentIndexChanged.connect(self.elevChanged)
+
         self.ui.tableWidget.cellDoubleClicked.connect(self.affFichEl)
+
+        self.initAcademies()
+
+        #self.ui.cbElev.QInputDialog(self)
 
     def initAcademies(self):
         self.ui.cbAcad.clear()
@@ -125,7 +130,8 @@ class eleveRech(QMainWindow):
     def elevChanged(self):
         indexAcad = indexAcadSelec(self.ui.cbAcad.currentText(), self.mesdata["academies"])
         indexEtab = indexEtabSelec(self.ui.cbEtab.currentText(), self.mesdata["academies"][indexAcad]["etablissements"])
-        indexClass = indexClassSelec(self.ui.cbClass.currentText(),self.mesdata["academies"][indexAcad]["etablissements"][indexEtab]["classes"])
+        indexClass = indexClassSelec(self.ui.cbClass.currentText(), self.mesdata["academies"][indexAcad][
+            "etablissements"][indexEtab]["classes"])
         listelev = self.mesdata["academies"][indexAcad]["etablissements"][indexEtab]["classes"][indexClass]["eleves"]
 
         self.ui.tableWidget.setRowCount(len(listelev))
@@ -136,33 +142,105 @@ class eleveRech(QMainWindow):
             self.ui.tableWidget.setItem(cpt, 1, QTableWidgetItem(elev["prenom"]))
             cpt += 1
 
+            # dicoClasse = self.dico["academies"][self.ui.cbAcad.currentIndex()]["etablissements"][
+            #     self.ui.cbEtab.currentIndex()]["classes"][self.ui.cbClass.currentIndex()]
+            # for eleve in dicoClasse["eleves"]:
+            for matiere in elev["matieres"]:
+                mat = self.ui.cbMatier.currentText()
+                if matiere["nom"] == mat:
+                    nomE = elev["nom"]
+                    self.ui.tableWidget.setRowCount(cpt + 1)
+                    itemE = QTableWidgetItem(nomE)
+                    self.ui.tableWidget.setItem(cpt, 0, itemE)
+                    spinB = QDoubleSpinBox()
+                    spinB.setProperty("nom", nomE)
+                    self.ui.tableWidget.setCellWidget(cpt, 1, spinB)
+                    cpt = cpt + 1
+
+            self.ui.tableWidget.setHorizontalHeaderLabels(['Nom', 'Note'])
+
+    def updateMatiere(self):
+        dicoClasse = self.dico["academies"][self.ui.cbAcad.currentIndex()]["etablissements"][
+            self.ui.cbEtab.currentIndex()]["classes"][self.ui.cbClass.currentIndex()]
+        listeMatieres = []
+        for eleve in dicoClasse["eleves"]:
+            for matiere in eleve["matieres"]:
+                listeMatieres.append(matiere["nom"])
+                nomE = eleve["nom"]
+                self.ui.tableWidget.setRowCount(cpt + 1)
+                itemE = QTableWidgetItem(nomE)
+                self.ui.tableWidget.setItem(cpt, 0, itemE)
+                spinB = QDoubleSpinBox()
+                spinB.setProperty("nom", nomE)
+                self.ui.tableWidget.setCellWidget(cpt, 1, spinB)
+                cpt = cpt + 1
+
+            self.uiAff.tableView.setHorizontalHeaderLabels(['Nom', 'Note'])
+
+        listeMatieresUniques = np.unique(listeMatieres)
+        self.ui.cbMatier.addItems(listeMatieresUniques)
+
+
     def affFichEl(self):
-        wAff = QDialog()
-        uiAff = Ui_Dialog()
-        uiAff.setupUi(wAff)
+        print(self.ui.tableWidget.currentItem().text())
 
-        freq = [np.random.randint(100, 200), np.random.randint(100, 200), np.random.randint(100, 200),
-                np.random.randint(200, 300),
-                np.random.randint(300, 400), np.random.randint(500, 600), np.random.randint(700, 800),
-                np.random.randint(700, 800),
-                np.random.randint(500, 600), np.random.randint(300, 400), np.random.randint(200, 300),
-                np.random.randint(100, 200)]
-        mois = range(1, 13)
+        labels = []
+        for a in self.mesdata["academies"]:
+            for e in a["etablissements"]:
+                for c in e["classes"]:
+                    for elev in c["eleves"]:
+                        if elev['nom']  == self.ui.tableWidget.currentItem().text():
+                            print("Trouvé !")
 
-        fig, ax = plt.subplots()
-        ax.plot(mois, freq)
 
-        plt.xticks(np.arange(min(mois), max(mois) + 1, 1.0))
+        # freq = [np.random.randint(100, 200), np.random.randint(100, 200), np.random.randint(100, 200),
+        #         np.random.randint(200, 300),
+        #         np.random.randint(300, 400), np.random.randint(500, 600), np.random.randint(700, 800),
+        #         np.random.randint(700, 800),
+        #         np.random.randint(500, 600), np.random.randint(300, 400), np.random.randint(200, 300),
+        #         np.random.randint(100, 200)]
+        # mois = range(1, 13)
+        #
+        # fig, ax = plt.subplots()
+        # ax.plot(mois, freq)
+        #
+        # plt.xticks(np.arange(min(mois), max(mois) + 1, 1.0))
+        #
+        # ax.set(xlabel='mois', ylabel='fréq.',
+        #        title='Fréquentation du centre')
+        # ax.grid(True, linestyle='dotted')
+        #
+        # canvas = FigureCanvas(fig)
+        # uiAff.horizontalLayout.addWidget(canvas)
+        # self.setLayout(uiAff.horizontalLayout)
 
-        ax.set(xlabel='mois', ylabel='fréq.',
-               title='Fréquentation du centre')
-        ax.grid(True, linestyle='dotted')
+        # angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
+        # # close the plot
+        # moyenneEleveR = np.concatenate((moysE, [moysE[0]]))
+        # moyenneClasseR = np.concatenate((listMoyC, [listMoyC[0]]))
+        # angles = np.concatenate((angles, [angles[0]]))
+        #
+        # self.fig = plt.figure()
+        # ax = self.fig.add_subplot(111, polar=True)
+        # ax.plot(angles, moyenneEleveR, 'o-', linewidth=2, label="Elève")
+        # ax.fill(angles, moyenneEleveR, alpha=0.2)
+        # ax.plot(angles, moyenneClasseR, 'o-', linewidth=2, label="Classe")
+        # ax.fill(angles, moyenneClasseR, alpha=0.2)
+        # ax.set_thetagrids(angles * 180 / np.pi, labels)
+        # plt.yticks([2, 4, 6, 8, 10, 12, 14, 16, 18], color="grey", size=7)
+        # plt.ylim(0, 20)
+        #
+        # ax.set_title(eleveR)
+        # ax.grid(True)
+        # plt.legend(loc='upper right')
+        #
+        # self.canvas = FigureCanvas(self.fig)  # the matplotlib canvas
+        # self.ui.qRadar.addWidget(self.canvas)
+        #
+        # self.setLayout(self.ui.qRadar)
+        # self.show()
 
-        canvas = FigureCanvas(fig)
-        uiAff.horizontalLayout.addWidget(canvas)
-        self.setLayout(uiAff.horizontalLayout)
-
-        wAff.exec_()
+        self.wAff.exec_()
 
     def lireJSON(self, filename):
         with open(filename) as json_file:
