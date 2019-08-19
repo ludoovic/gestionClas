@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1093</width>
-    <height>853</height>
+    <height>808</height>
    </rect>
   </property>
   <property name="font">
@@ -34,7 +34,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="cbAcad"/>
+         <widget class="QComboBox" name="cbAcad">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -48,7 +55,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="cbEtab"/>
+         <widget class="QComboBox" name="cbEtab">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -62,12 +76,22 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="cbClass"/>
+         <widget class="QComboBox" name="cbClass">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_7">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMaximumSize</enum>
+        </property>
         <item>
          <widget class="QLabel" name="labElev">
           <property name="text">
@@ -76,7 +100,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="cbElev"/>
+         <widget class="QComboBox" name="cbElev">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -90,7 +121,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="cbMatier"/>
+         <widget class="QComboBox" name="cbMatier">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -166,7 +204,7 @@
      <x>0</x>
      <y>0</y>
      <width>1093</width>
-     <height>33</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
